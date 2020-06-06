@@ -42,6 +42,12 @@ def predict(filename):
     return 'error'
 
 
+
+@api.route("/")
+@cross_origin()
+def index():
+    return "<h1>Hello Azure!</h1>"
+
 @api.route('/upload', methods=['POST'])
 @cross_origin()
 def upload_file():
