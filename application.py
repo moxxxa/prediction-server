@@ -1,4 +1,4 @@
-from flask import Flask, json, request, url_for
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
 import os
 from werkzeug.utils import secure_filename
