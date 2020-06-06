@@ -35,7 +35,7 @@ setuptools==47.1.1
 six==1.15.0
 tensorboard==2.2.2
 tensorboard-plugin-wit==1.6.0.post3
-tensorflow-estimator==2.20
+tensorflow-estimator==2.2.0
 termcolor==1.1.0
 utllib3==1.25.9
 wheel==0.34.2
