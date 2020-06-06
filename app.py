@@ -3,12 +3,13 @@ from flask_cors import CORS, cross_origin
 import os
 from werkzeug.utils import secure_filename
 from tensorflow.keras.models import load_model
-import cv2
+from PIL import Image
+import numpy as np
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + "/src/uploads"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
-target_size = 96
+target_size = (96, 96)
 model_path = os.path.dirname(os.path.abspath(__file__)) + "/src/my_model1.keras"
 api = Flask(__name__)
 cors = CORS(api)
@@ -23,19 +24,21 @@ def allowed_file(filename):
 
 def predict(filename):
     if filename:
-        image = cv2.imread(UPLOAD_FOLDER + '/' + filename)
+        img = Image.open(UPLOAD_FOLDER + '/' + filename).convert('RGB').resize(target_size)
         print('[INFO] image loaded successfully')
-        image = cv2.resize(image, (target_size, target_size))
-        print('[INFO] image resized successfully')
-        image = image.astype("float") / 255.0
-        image = image.reshape((1, image.shape[0], image.shape[1],
-                               image.shape[2]))
         print("[INFO] loading the model ...")
         model = load_model(model_path)
-        preds = model.predict(image)
-        result = preds.argmax(axis=1)[0]
-        # return str(result)
-        return str(3)
+        print("[INFO] model loaded successfully")
+        print("[INFO] Starting the prediction...")
+        img = np.array(img) / 255.0
+        img = img.reshape((1, img.shape[0], img.shape[1],
+                               img.shape[2]))
+        preds = model.predict(img)
+        print("[INFO] prediction success ", preds)
+        result = preds.argmax(axis=-1)[0]
+        print("[INFO] final result ", result)
+        return str(result)
+        # return str(3)
     return 'error'
 
 
