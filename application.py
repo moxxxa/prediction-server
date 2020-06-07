@@ -11,10 +11,10 @@ UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + "/src/uploads"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 target_size = (96, 96)
 model_path = os.path.dirname(os.path.abspath(__file__)) + "/src/my_model1.keras"
-api = Flask(__name__)
-cors = CORS(api)
-api.config['CORS_HEADERS'] = 'Content-Type'
-api.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -43,12 +43,12 @@ def predict(filename):
 
 
 
-@api.route("/")
+@app.route("/")
 @cross_origin()
 def index():
     return "<h1>Hello Azure!</h1>"
 
-@api.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 @cross_origin()
 def upload_file():
     for upload in request.files.lists():
@@ -60,7 +60,7 @@ def upload_file():
             print("[INFO] File supported moving on...")
             print("[INFO] Accept incoming file:", file.filename)
             filename = secure_filename(file.filename)
-            file.save(os.path.join(api.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             print("[INFO] Save it to:", UPLOAD_FOLDER)
             print("[INFO] Starting the prediction with the Keras model...")
             res_prediction = predict(filename)
@@ -70,4 +70,4 @@ def upload_file():
     return 'error'
 
 if __name__ == '__main__':
-    api.run()
+    app.run()
