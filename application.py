@@ -46,7 +46,7 @@ def predict(filename):
 @app.route("/")
 @cross_origin()
 def index():
-    return "<h1>Hello Azure!</h1>"
+    return "<h1>Weclome to esgi-prediction, use this web-server to predict Dog, Cat and Parrot using the endpoint /upload</h1>"
 
 @app.route('/upload', methods=['POST'])
 @cross_origin()
