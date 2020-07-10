@@ -6,6 +6,7 @@ from tensorflow.keras.models import load_model
 from PIL import Image
 import numpy as np
 
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + "/src/uploads"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
