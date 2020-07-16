@@ -92,4 +92,5 @@ def downloadSource():
 if __name__ == '__main__':
     downloadSource()
     model = load_model(model_path)
+    print("model is avaialble")
     app.run()
