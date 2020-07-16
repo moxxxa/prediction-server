@@ -46,3 +46,8 @@ urllib3==1.25.9
 wheel==0.34.2
 wrapt==1.12.1
 zipp==3.1.0
+google-auth==1.16.1
+google-auth-oauthlib==0.4.1
+google-pasta==0.2.0
+googledrivedownloader==0.4
+
