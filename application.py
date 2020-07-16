@@ -8,14 +8,14 @@ from PIL import Image
 import numpy as np
 from google_drive_downloader import GoogleDriveDownloader as gdd
 
-model = ""
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 UPLOAD_FOLDER = os.path.dirname(os.path.abspath(__file__)) + "/src/uploads"
 DownloadFolder = os.path.dirname(os.path.abspath(__file__)) + "/src/"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 target_size = (96, 96)
 model_path = os.path.dirname(os.path.abspath(__file__)) + "/src/modelTL2.keras"
-print("model path = " + model_path)
+print("Final model path = " + model_path)
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -45,6 +45,8 @@ def predict(filename):
 
         imageArray = imageToArray(image)
         print("[INFO] convertion to array successfully...")
+
+        model = load_model(model_path)
 
         preds = model.predict(imageArray)
         # print("preds =" + preds.argmax(axis=-1))
@@ -91,6 +93,4 @@ def downloadSource():
 
 if __name__ == '__main__':
     downloadSource()
-    model = load_model(model_path)
-    print("model is avaialble")
     app.run()
